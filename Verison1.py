@@ -20,14 +20,6 @@ class StockTakingApp:
         self.delete_button = tk.Button(root, text="Delete Stock Item", command=self.delete_stock)
         self.delete_button.pack(pady=5)
 
-
-
-
-
-
-
-
-
     def add_stock(self):
         item_name = simpledialog.askstring("Input", "Enter stock item name:")
         if item_name:
