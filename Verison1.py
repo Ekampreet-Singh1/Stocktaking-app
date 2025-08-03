@@ -52,7 +52,6 @@ class StockTakingApp:
         else:
             messagebox.showwarning("Error", f"{item_name} not found in stock.")  # Show error if item not found
 
-
 if __name__ == "__main__":
     root = tk.Tk()  
     app = StockTakingApp(root)  
