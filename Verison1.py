@@ -8,7 +8,7 @@ class StockTakingApp:
 
         self.stock = {}
 
-        self.label = tk.Label(root, text="Stock Taking System", font=("Helvetica", 16))
+        self.label = tk.Label(root, text="Stock Taking System", font=("Arial", 16))
         self.label.pack(pady=10)
 
         self.add_button = tk.Button(root, text="Add Stock Item", command=self.add_stock)
