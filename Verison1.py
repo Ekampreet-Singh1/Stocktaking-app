@@ -53,6 +53,6 @@ class StockTakingApp:
             messagebox.showwarning("Error", f"{item_name} not found in stock.")  # Show error if item not found
 
 if __name__ == "__main__":
-    root = tk.Tk()  
+    root = tk.Tk()  #Creats a main window
     app = StockTakingApp(root)  
-    root.mainloop()  
+    root.mainloop()  #Starts a the gui event loop
