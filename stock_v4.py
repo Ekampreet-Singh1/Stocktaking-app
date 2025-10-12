@@ -4,7 +4,6 @@ from tkinter import messagebox, simpledialog # For popups and dialogs
 import json # For saving/loading stock data
 import os # For file path operations
 
-
 # Define a custom RoundedButton class that inherits from tk.Canvas to create buttons with rounded corners
 class RoundedButton(tk.Canvas):
     # Initialize the RoundedButton with parameters for parent, text, command, font, size, background, and corner radius
@@ -110,28 +109,22 @@ class StockTakingApp:
 
     # Initialize the StockTakingApp with the root window
     def __init__(self, root):
-        # Store the root window reference
+        # Set up root window: title, size, and background
         self.root = root
-        # Set the window title
         self.root.title("Stock Taking System - Version 4")
-        # Set the window size
         self.root.geometry("600x600")
-        # Set the background color of the window
         self.root.configure(bg="lightgray")
 
-        # Initialize an empty dictionary to hold stock items and quantities
+        # Initialize stock data and settings
         self.stock = {}
-        # Set the filename for saving/loading stock data
         self.stock_file = "stock_data.json"
-        # Set the total capacity for stock
         self.total_capacity = 1000
-        # Construct the path to the logo image file
         self.image_path = os.path.join(os.path.dirname(__file__), "company_logo.gif")
 
         # Load stock data from file at startup
         self.load_stock()
 
-        # Create a frame for the title and logo
+        # Create title frame with label and logo
         title_frame = tk.Frame(self.root, bg="lightgray")
         title_label = tk.Label(title_frame, text="StockTaker", font=("Arial", 16, "bold"), bg="lightgray")
         title_label.pack()
@@ -271,7 +264,7 @@ class StockTakingApp:
         # Prompt user to add stock. Validates input and enforces capacity boundary."""
         try:
             # Prompt the user for the item name
-            item_name = simpledialog.askstring("Input", "Enter stock item name:")
+            item_name = simpledialog.askstring("Input", "Enter stock item name:\t\t\t\t")
             # If user cancelled, return
             if item_name is None:
                 return  # user cancelled
@@ -279,13 +272,13 @@ class StockTakingApp:
             item_name = item_name.strip()
             # Check if item name is empty
             if not item_name:
-                messagebox.showerror("Input Error", "Item name cannot be empty.")
+                messagebox.showerror("Input Error", "Item name cannot be empty.\t\t\t\t")
                 return
 
             # Get the current total stock
             current_total = self.get_total_stock()
             # Prompt the user for the quantity to add
-            quantity = simpledialog.askinteger("Input", "Enter quantity to add:")
+            quantity = simpledialog.askinteger("Input", "Enter quantity to add:\t\t\t\t")
             # If user cancelled, return
             if quantity is None:
                 return  # cancelled
@@ -333,21 +326,21 @@ class StockTakingApp:
                 if ":" in selected_text:
                     item_name = selected_text.split(":", 1)[0].strip()
                 elif selected_text == "No stock items available.":
-                    messagebox.showinfo("Remove Stock", "No items to remove.")
+                    messagebox.showinfo("Remove Stock", "No items to remove.\t\t\t\t")
                     return
 
             if not item_name:
                 # Ask for item name explicitly if nothing selected
-                item_name = simpledialog.askstring("Input", "Enter stock item name to remove:")
+                item_name = simpledialog.askstring("Input", "Enter stock item name to remove:\t\t\t\t")
                 if item_name is None:
                     return
                 item_name = item_name.strip()
                 if not item_name:
-                    messagebox.showerror("Input Error", "Item name cannot be empty.")
+                    messagebox.showerror("Input Error", "Item name cannot be empty.\t\t\t\t")
                     return
 
             if item_name not in self.stock:
-                messagebox.showerror("Not Found", f"Item '{item_name}' not found in stock.")
+                messagebox.showerror("Not Found", f"Item '{item_name}' not found in stock.\t\t\t\t")
                 return
 
             current_qty = int(self.stock[item_name])
@@ -358,7 +351,7 @@ class StockTakingApp:
             if quantity is None:
                 return
             if quantity <= 0:
-                messagebox.showerror("Input Error", "Quantity must be a positive integer.")
+                messagebox.showerror("Input Error", "Quantity must be a positive integer.\t\t\t\t")
                 return
 
             if quantity >= current_qty:
