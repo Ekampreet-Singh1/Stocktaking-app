@@ -111,15 +111,15 @@ class StockTakingApp:
     def __init__(self, root):
         # Set up root window: title, size, and background
         self.root = root
-        self.root.title("Stock Taking System - Version 4")
-        self.root.geometry("600x600")
-        self.root.configure(bg="lightgray")
+        self.root.title("Stock Taking System - Version 4") # Updated title for version 4
+        self.root.geometry("600x600") # Increased window size for better layout
+        self.root.configure(bg="lightgray") # Set a light gray background for better aesthetics
 
         # Initialize stock data and settings
         self.stock = {}
-        self.stock_file = "stock_data.json"
-        self.total_capacity = 1000
-        self.image_path = os.path.join(os.path.dirname(__file__), "company_logo.gif")
+        self.stock_file = "stock_data.json" # File to save stock data
+        self.total_capacity = 1000 # Maximum stock capacity
+        self.image_path = os.path.join(os.path.dirname(__file__), "company_logo.gif") # Path to company logo
 
         # Load stock data from file at startup
         self.load_stock()
@@ -235,7 +235,7 @@ class StockTakingApp:
 
         # If there are no stock items, display a message
         if not self.stock:
-            self.stock_listbox.insert(tk.END, "No stock items available.")
+            self.stock_listbox.insert(tk.END, "No stock items available.") # Informative message
         else:
             # Sort the stock items alphabetically
             sorted_items = sorted(self.stock.items())
