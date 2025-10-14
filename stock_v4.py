@@ -125,14 +125,14 @@ class StockTakingApp:
         self.load_stock()
 
         # Create title frame with label and logo
-        title_frame = tk.Frame(self.root, bg="lightgray")
-        title_label = tk.Label(title_frame, text="StockTaker", font=("Arial", 16, "bold"), bg="lightgray")
+        title_frame = tk.Frame(self.root, bg="lightgray") # Title frame
+        title_label = tk.Label(title_frame, text="StockTaker", font=("Arial", 16, "bold"), bg="lightgray") # Title label
         title_label.pack()
         # Load and display the company logo if available
         try:
             self.logo_image = tk.PhotoImage(file=self.image_path)
-            logo_label = tk.Label(title_frame, image=self.logo_image, bg="lightgray")
-            logo_label.pack()
+            logo_label = tk.Label(title_frame, image=self.logo_image, bg="lightgray")# Display logo
+            logo_label.pack() #
         except tk.TclError:
             # If logo file not found, skip displaying it
             pass
@@ -142,34 +142,34 @@ class StockTakingApp:
         self.stock_listbox = tk.Listbox(self.root, height=15, width=50)
         self.stock_listbox.pack(pady=10)
 
-        # Create buttons frame
+        # Create buttons frame with rounded buttons
         button_frame = tk.Frame(self.root, bg="lightgray")
         button_frame.pack(pady=10)
 
-        # Create add button
+        # Create add button with green color
         self.add_button = RoundedButton(button_frame, "Add Stock", self.add_stock, ("Arial", 12), 15, 2, "green")
         self.add_button.pack(side=tk.LEFT, padx=10)
 
-        # Create remove button
+        # Create remove button with coral color
         self.remove_button = RoundedButton(button_frame, "Remove Stock", self.remove_stock, ("Arial", 12), 15, 2, "coral")
         self.remove_button.pack(side=tk.LEFT, padx=10)
 
-        # Create refresh button
+        # Create refresh button with blue color
         self.refresh_button = RoundedButton(button_frame, "Refresh", self.refresh_display, ("Arial", 12), 10, 2, "blue")
         self.refresh_button.pack(side=tk.LEFT, padx=10)
 
-        # Create save button
+        # Create save button with orange color
         self.save_button = RoundedButton(button_frame, "Save", self.save_stock, ("Arial", 12), 10, 2, "orange")
         self.save_button.pack(side=tk.LEFT, padx=10)
 
-        # Create status label
+        # Create status label for total stock and remaining capacity
         self.status_label = tk.Label(self.root, text="", bg="lightgray", font=("Arial", 12))
         self.status_label.pack(pady=10)
 
-        # Bind closing event
+        # Bind closing event to auto-save
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
-        # Initial refresh
+        # Initial refresh to display stock
         self.refresh_display()
 
     # Method to load stock data from the JSON file
