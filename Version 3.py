@@ -1,4 +1,5 @@
 # Stock Taking System - Version 3
+
 import tkinter as tk  # Importing tkinter for GUI
 from tkinter import messagebox, simpledialog  # For popups and input dialogs
 import json  # For saving and loading data as JSON files

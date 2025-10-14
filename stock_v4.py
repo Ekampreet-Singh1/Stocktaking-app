@@ -6,7 +6,7 @@ import os # For file path operations
 
 # Define a custom RoundedButton class that inherits from tk.Canvas to create buttons with rounded corners
 class RoundedButton(tk.Canvas):
-    # Initialize the RoundedButton with parameters for parent, text, command, font, size, background, and corner radius
+    # Initialize the RoundedButton with parameters for parent, text, command, font, size, background and corner radius
     def __init__(self, parent, text, command, font, width, height, bg, corner_radius=10):
         # Calculate approximate pixel width from character width units for better button sizing
         pixel_width = width * 8  # Adjusted for better fit
@@ -180,9 +180,9 @@ class StockTakingApp:
             if os.path.exists(self.stock_file):
                 # Open the file in read mode
                 with open(self.stock_file, "r") as file:
-                    # Load the JSON data into a dictionary
+                    # Load the JSON data into a dictionary using json.load, which parses JSON into a Python dict
                     data = json.load(file)
-                    # Coerce values to integers to avoid type errors 
+                    # Coerce values to integers to avoid type errors
                     # Initialize an empty dictionary for cleaned data
                     cleaned = {}
                     # Iterate over each key-value pair in the loaded data
@@ -211,7 +211,7 @@ class StockTakingApp:
         try:
             # Open the file in write mode
             with open(self.stock_file, "w") as file:
-                # Dump the stock dictionary to JSON with indentation for readability
+                # Dump the stock dictionary to JSON with indentation for readability using json.dump
                 json.dump(self.stock, file, indent=4)
             # Show success message to the user
             messagebox.showinfo("Save", "Stock data saved successfully.")
@@ -261,10 +261,10 @@ class StockTakingApp:
 
     # Method to prompt the user to add stock items, validate input, and enforce capacity limits
     def add_stock(self):
-        # Prompt user to add stock. Validates input and enforces capacity boundary."""
+        # Prompt user to add stock. Validates input and enforces capacity boundary.
         try:
             # Prompt the user for the item name
-            item_name = simpledialog.askstring("Input", "Enter stock item name:\t\t\t\t")
+            item_name = simpledialog.askstring("Input", "Enter stock item name:\t\t\t\t") #Used askstring to make sure that the user inputs a name
             # If user cancelled, return
             if item_name is None:
                 return  # user cancelled
@@ -278,13 +278,13 @@ class StockTakingApp:
             # Get the current total stock
             current_total = self.get_total_stock()
             # Prompt the user for the quantity to add
-            quantity = simpledialog.askinteger("Input", "Enter quantity to add:\t\t\t\t")
+            quantity = simpledialog.askinteger("Input", "Enter quantity to add:\t\t\t\t") #Used askinteger to make sure the user enters a number for the quantity
             # If user cancelled, return
             if quantity is None:
                 return  # cancelled
             # Check if quantity is positive
             if quantity <= 0:
-                messagebox.showerror("Input Error", "Quantity must be a positive integer.")
+                messagebox.showerror("Input Error", "Quantity must be a positive integer.") #Error message
                 return
 
             # Check if adding this quantity would exceed capacity
@@ -316,7 +316,7 @@ class StockTakingApp:
 
     # Method to prompt the user to remove stock items, using selection if available or asking for item name
     def remove_stock(self):
-        #Prompt user to remove stock. Use selection if available, else ask for item name."""
+        #Prompt user to remove stock. Use selection if available, else ask for item name.
         try:
             # If user has selected a listbox item, try to parse it (format "Name: qty")
             sel = self.stock_listbox.curselection()
@@ -326,21 +326,21 @@ class StockTakingApp:
                 if ":" in selected_text:
                     item_name = selected_text.split(":", 1)[0].strip()
                 elif selected_text == "No stock items available.":
-                    messagebox.showinfo("Remove Stock", "No items to remove.\t\t\t\t")
+                    messagebox.showinfo("Remove Stock", "No items to remove.\t\t\t\t") 
                     return
 
             if not item_name:
                 # Ask for item name explicitly if nothing selected
-                item_name = simpledialog.askstring("Input", "Enter stock item name to remove:\t\t\t\t")
+                item_name = simpledialog.askstring("Input", "Enter stock item name to remove:\t\t\t\t") #Asking user for the item name to remove
                 if item_name is None:
                     return
                 item_name = item_name.strip()
                 if not item_name:
-                    messagebox.showerror("Input Error", "Item name cannot be empty.\t\t\t\t")
+                    messagebox.showerror("Input Error", "Item name cannot be empty.\t\t\t\t") #Making sure that the user is actually inputting something
                     return
 
             if item_name.lower() not in self.stock:
-                messagebox.showerror("Not Found", f"Item '{item_name}' not found in stock.\t\t\t\t")
+                messagebox.showerror("Not Found", f"Item '{item_name}' not found in stock.\t\t\t\t") #Error if item isnt found or doesnt exist
                 return
 
             current_qty = int(self.stock[item_name.lower()])
@@ -351,7 +351,7 @@ class StockTakingApp:
             if quantity is None:
                 return
             if quantity <= 0:
-                messagebox.showerror("Input Error", "Quantity must be a positive integer.\t\t\t\t")
+                messagebox.showerror("Input Error", "Quantity must be a positive integer.\t\t\t\t") #Error handling for invalid input
                 return
 
             if quantity > current_qty:
