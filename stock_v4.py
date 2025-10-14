@@ -272,7 +272,7 @@ class StockTakingApp:
             item_name = item_name.strip()
             # Check if item name is empty
             if not item_name:
-                messagebox.showerror("Input Error", "Item name cannot be empty.\t\t\t\t")
+                messagebox.showerror("Input Error", "Item name cannot be empty.\t\t\t\t") #Error message
                 return
 
             # Get the current total stock
@@ -293,7 +293,7 @@ class StockTakingApp:
                 max_add = self.total_capacity - current_total
                 messagebox.showwarning(
                     "Capacity Warning",
-                    f"Adding {quantity} would exceed capacity ({self.total_capacity}). Max add: {max_add}.",
+                    f"Adding {quantity} would exceed capacity ({self.total_capacity}). Max add: {max_add}.", #Warning message
                 )
                 return
 
@@ -312,7 +312,7 @@ class StockTakingApp:
             self.refresh_display()
         except Exception as e:
             # Show error message for any unexpected errors
-            messagebox.showerror("Error", f"An unexpected error occurred: {e}")
+            messagebox.showerror("Error", f"An unexpected error occurred: {e}") # General error handling
 
     # Method to prompt the user to remove stock items, using selection if available or asking for item name
     def remove_stock(self):
@@ -325,8 +325,8 @@ class StockTakingApp:
                 selected_text = self.stock_listbox.get(sel[0])
                 if ":" in selected_text:
                     item_name = selected_text.split(":", 1)[0].strip()
-                elif selected_text == "No stock items available.":
-                    messagebox.showinfo("Remove Stock", "No items to remove.\t\t\t\t") 
+                elif selected_text == "No stock items available.": # Handle case where no items are available
+                    messagebox.showinfo("Remove Stock", "No items to remove.\t\t\t\t") # Informative message
                     return
 
             if not item_name:
@@ -343,10 +343,10 @@ class StockTakingApp:
                 messagebox.showerror("Not Found", f"Item '{item_name}' not found in stock.\t\t\t\t") #Error if item isnt found or doesnt exist
                 return
 
-            current_qty = int(self.stock[item_name.lower()])
+            current_qty = int(self.stock[item_name.lower()]) #The current quantity of the item to be removed
             # Ask how many to remove
             quantity = simpledialog.askinteger(
-                "Input", f"Enter quantity to remove (current: {current_qty}).\nEnter {current_qty} to remove all:"
+                "Input", f"Enter quantity to remove (current: {current_qty}).\nEnter {current_qty} to remove all:" #Entering the amount to remove
             )
             if quantity is None:
                 return
@@ -355,7 +355,7 @@ class StockTakingApp:
                 return
 
             if quantity > current_qty:
-                messagebox.showerror("Error", f"Cannot remove {quantity} as only {current_qty} available. Removing all instead.")
+                messagebox.showerror("Error", f"Cannot remove {quantity} as only {current_qty} available. Removing all instead.") #Error messagr
                 quantity = current_qty
 
             if quantity >= current_qty:
@@ -365,7 +365,7 @@ class StockTakingApp:
             else:
                 # Subtract quantity
                 self.stock[item_name.lower()] = current_qty - int(quantity)
-                messagebox.showinfo("Removed", f"Removed {quantity} of '{item_name}'. Remaining: {self.stock[item_name.lower()]}")
+                messagebox.showinfo("Removed", f"Removed {quantity} of '{item_name}'. Remaining: {self.stock[item_name.lower()]}") #Success message
 
             # Auto-save and refresh
             try:
@@ -374,7 +374,7 @@ class StockTakingApp:
                 pass
             self.refresh_display()
         except Exception as e:
-            messagebox.showerror("Error", f"An unexpected error occurred: {e}")
+            messagebox.showerror("Error", f"An unexpected error occurred: {e}") # General error handling
 
     # Method to handle the window closing event, auto-saving stock data before destroying the root window
     def on_closing(self):
@@ -385,7 +385,7 @@ class StockTakingApp:
                 json.dump(self.stock, file, indent=4)
         except Exception:
             # If save fails, still attempt to close gracefully after informing user.
-            messagebox.showwarning("Save Warning", "Could not save stock data on exit.")
+            messagebox.showwarning("Save Warning", "Could not save stock data on exit.") # Warning message
         finally:
             self.root.destroy()
 
