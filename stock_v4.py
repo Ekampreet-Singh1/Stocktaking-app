@@ -188,11 +188,11 @@ class StockTakingApp:
                     # Iterate over each key-value pair in the loaded data
                     for k, v in data.items():
                         try:
-                            # Convert the key to string and strip whitespace, value to int
-                            cleaned[str(k).strip()] = int(v)
+                            # Convert the key to string, strip whitespace, and lowercase for case insensitivity, value to int
+                            cleaned[str(k).strip().lower()] = int(v)
                         except (ValueError, TypeError):
                             # If a value can't be converted to int, skip or set to 0
-                            cleaned[str(k).strip()] = 0
+                            cleaned[str(k).strip().lower()] = 0
                     # Assign the cleaned data to self.stock
                     self.stock = cleaned
                 # non-intrusive info (useful while testing)
@@ -298,7 +298,7 @@ class StockTakingApp:
                 return
 
             # Add or increment the item in the stock dictionary
-            self.stock[item_name] = self.stock.get(item_name, 0) + int(quantity)
+            self.stock[item_name.lower()] = self.stock.get(item_name.lower(), 0) + int(quantity)
             # Show success message
             messagebox.showinfo("Success", f"Added {quantity} of '{item_name}'.")
             # Auto-save and refresh
@@ -339,11 +339,11 @@ class StockTakingApp:
                     messagebox.showerror("Input Error", "Item name cannot be empty.\t\t\t\t")
                     return
 
-            if item_name not in self.stock:
+            if item_name.lower() not in self.stock:
                 messagebox.showerror("Not Found", f"Item '{item_name}' not found in stock.\t\t\t\t")
                 return
 
-            current_qty = int(self.stock[item_name])
+            current_qty = int(self.stock[item_name.lower()])
             # Ask how many to remove
             quantity = simpledialog.askinteger(
                 "Input", f"Enter quantity to remove (current: {current_qty}).\nEnter {current_qty} to remove all:"
@@ -354,14 +354,18 @@ class StockTakingApp:
                 messagebox.showerror("Input Error", "Quantity must be a positive integer.\t\t\t\t")
                 return
 
+            if quantity > current_qty:
+                messagebox.showerror("Error", f"Cannot remove {quantity} as only {current_qty} available. Removing all instead.")
+                quantity = current_qty
+
             if quantity >= current_qty:
                 # Remove the item entirely
-                del self.stock[item_name]
+                del self.stock[item_name.lower()]
                 messagebox.showinfo("Removed", f"Removed all of '{item_name}'.")
             else:
                 # Subtract quantity
-                self.stock[item_name] = current_qty - int(quantity)
-                messagebox.showinfo("Removed", f"Removed {quantity} of '{item_name}'. Remaining: {self.stock[item_name]}")
+                self.stock[item_name.lower()] = current_qty - int(quantity)
+                messagebox.showinfo("Removed", f"Removed {quantity} of '{item_name}'. Remaining: {self.stock[item_name.lower()]}")
 
             # Auto-save and refresh
             try:
